@@ -1381,16 +1381,28 @@
                                   tabel_ajukanlah = ajukankontent.find("#ajukanwe").DataTable({
 
                                   });
+                                function reverse_number_format(stringNumber){
+                                    var s = stringNumber;
+                                    s = s.replace("Rp&nbsp;","");
+                                    s = s.split(",");
+                                    s = s[0];
+                                    s = s.replace(".","")
+                                    return s;
+                                }
+                                function number_format(number){
+                                    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+                                }
                                   ajukankontent.find("#ajukanwe .jml").on('change', function(event) {
                                     event.preventDefault();
                                     uTotal = ajukankontent.find("#total").html();
+                                    uTotal = reverse_number_format(uTotal);
                                     uHarga = $(this).data("harga");
                                     uJumlah = $(this).val();
                                     jumlah = parseFloat(uJumlah);
                                     harga = parseFloat(uHarga);
                                     total = parseFloat(uTotal);
                                     console.log("Total = "+total);
-                                    ajukankontent.find("#total").html(total+(harga*uJumlah));
+                                    ajukankontent.find("#total").html(number_format(total+(harga*uJumlah)));
                                   });
                                   ajukankontent.find("#ajukanatuh").on('submit',  function(event) {
                                     event.preventDefault();
